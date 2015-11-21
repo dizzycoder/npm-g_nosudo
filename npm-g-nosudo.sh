@@ -3,7 +3,7 @@
 usage()
 {
 cat << EOF
-usage: $0 [-d] [-v]
+usage: $0 [-d] [-v] [-y]
 
 This script is intended to fix the common problem where npm users
 are required to use sudo to install global packages.
