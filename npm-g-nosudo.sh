@@ -129,13 +129,17 @@ export MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
 '
 
 fix_env() {
-    if [ -f "${HOME}/.bashrc" ];    then
-        printf "${envfix}" ${npmdir} >> ~/.bashrc
-        printf "\nDon't forget to run 'source ~/.bashrc'\n"
+    if [ -f "${HOME}/.profile" ];    then
+        printf "${envfix}" ${npmdir} >> ~/.profile
+        printf "\nDon't forget to run 'source ~/.profile' or '. ~/.profile' (in the case of /bin/sh [dash])\n"
     fi
     if [ -f "${HOME}/.zshrc" ]; then
         printf "${envfix}" ${npmdir} >> ~/.zshrc
         printf "\nDon't forget to run 'source ~/.zshrc'\n"
+    fi    
+    if [ -f "${HOME}/.bash_profile" ]; then
+        printf "${envfix}" ${npmdir} >> ~/.bash_profile
+        printf "\nDon't forget to run 'source ~/.bash_profile'\n"
     fi
 
 }
