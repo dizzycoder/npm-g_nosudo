@@ -24,7 +24,7 @@ EOF
 DEBUG=0
 VERBOSE=0
 UNATTENDED=0
-while getopts "dv" OPTION
+while getopts "dvy" OPTION
 do
      case $OPTION in
          d)
