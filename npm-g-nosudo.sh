@@ -14,6 +14,7 @@ whilst also fixing permissions on the .npm dir before, reinstalling the old pack
 
 OPTIONS:
    -h   Show this message
+   -y   answer Y when prompted, use defaults if asked
    -d   debug
    -v   Verbose
 EOF
@@ -22,11 +23,15 @@ EOF
 
 DEBUG=0
 VERBOSE=0
+UNATTENDED=0
 while getopts "dv" OPTION
 do
      case $OPTION in
          d)
              DEBUG=1
+             ;;
+         y)
+             UNATTENDED=1
              ;;
          v)
              VERBOSE=1
@@ -69,7 +74,9 @@ fi
 defaultnpmdir="${HOME}/.npm-packages"
 npmdir=''
 
-read -p "Choose your install directory. Default (${defaultnpmdir}) : " npmdir
+if [ 0 = ${UNATTENDED} ];  then
+   read -p "Choose your install directory. Default (${defaultnpmdir}) : " npmdir
+fi
 
 if [ -z ${npmdir} ]; then
     npmdir=${defaultnpmdir}
@@ -139,7 +146,12 @@ echo_env() {
 }
 
 printf "\n\n"
-read -p "Do you wish to update your .bashrc/.zshrc file(s) with the paths and manpaths? [yn] " yn
+if [ 0 = ${UNATTENDED} ];  then
+   read -p "Do you wish to update your .bashrc/.zshrc file(s) with the paths and manpaths? [yn] " yn
+else
+   $yn='y'
+fi
+
 case $yn in
     [Yy]* ) fix_env;;
     [Nn]* ) echo_env;;
